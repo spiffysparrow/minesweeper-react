@@ -3,14 +3,6 @@ var React = require("react"),
   Clock = require("./clock.jsx");
 
 var WeatherClock = React.createClass({
-  componentDidMount: function(){
-
-  },
-
-  componentWillUnmount: function(){
-
-  },
-
   render: function(){
     return (
       <div id="weather-clock">

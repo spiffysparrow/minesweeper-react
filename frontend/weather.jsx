@@ -2,16 +2,17 @@ var React = require("react");
 
 var Weather = React.createClass({
   getInitialState: function() {
-
     return { temp: "", weather: "" };
   },
 
   componentDidMount: function() {
-    var coords;
-    var thisWeather = this;
-    var location = navigator.geolocation;
+    var thisWeather = this,
+        location = navigator.geolocation,
+        coords;
+
     location.getCurrentPosition(function(pos){
       coords = pos.coords;
+
       var request = new XMLHttpRequest();
       request.open('GET',
           "http://api.openweathermap.org/data/2.5/weather?lat=" +
@@ -21,11 +22,11 @@ var Weather = React.createClass({
       request.onload = function(){
         if (request.status === 200){
           var response = JSON.parse(request.responseText);
-          console.log(response.wea);
           var weather = response.weather[0].description;
           var temp = response.main.temp - 273;
+          
           thisWeather.setState({ temp: temp, weather: weather });
-        }else{
+        } else {
           console.log("bad request, status" + request.status);
         }
       };
@@ -34,14 +35,10 @@ var Weather = React.createClass({
     });
   },
 
-  componentWillUnmount: function() {
-
-  },
-
   render: function(){
     return (
-      <div>Weather: {this.state.weather}, Temp: {this.state.temp}
-
+      <div>
+        Weather: {this.state.weather}, Temp: {this.state.temp}
       </div>
     );
   }
