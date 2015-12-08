@@ -7,11 +7,10 @@ var Weather = React.createClass({
 
   componentDidMount: function() {
     var thisWeather = this,
-        location = navigator.geolocation,
-        coords;
+        location = navigator.geolocation;
 
     location.getCurrentPosition(function(pos){
-      coords = pos.coords;
+      var coords = pos.coords;
 
       var request = new XMLHttpRequest();
       request.open('GET',
@@ -24,7 +23,7 @@ var Weather = React.createClass({
           var response = JSON.parse(request.responseText);
           var weather = response.weather[0].description;
           var temp = response.main.temp - 273;
-          
+
           thisWeather.setState({ temp: temp, weather: weather });
         } else {
           console.log("bad request, status" + request.status);
