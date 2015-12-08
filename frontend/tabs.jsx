@@ -6,21 +6,18 @@ var Tabs = React.createClass({
   },
 
   handleClick: function(e) {
-    var item = e.currentTarget;
-    var index = item.getAttribute('data-index');
-
+    var item = e.currentTarget,
+        index = item.getAttribute('data-index');
+        
     this.setState({ selectedIndex: parseInt(index) });
   },
 
-  render: function() {
-    var tabs = this.props.tabs;
-    var selectedTab = tabs[this.state.selectedIndex];
+  formatHeaders: function() {
+    var tabs = this.props.tabs,
+        isSelected;
 
     var headers = tabs.map(function(tab, index) {
-      var isSelected = false;
-      if (index === this.state.selectedIndex) {
-        isSelected = true;
-      }
+      isSelected = (index === this.state.selectedIndex);
 
       return (
         <li key={ index } data-index={ index }
@@ -29,10 +26,16 @@ var Tabs = React.createClass({
       );
     }.bind(this));
 
+    return headers;
+  },
+
+  render: function() {
+    var selectedTab = this.props.tabs[this.state.selectedIndex];
+
     return (
       <div>
         <ul>
-          {headers}
+          {this.formatHeaders()}
         </ul>
         <article>{ selectedTab.content }</article>
       </div>

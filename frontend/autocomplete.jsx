@@ -1,7 +1,6 @@
 var React = require("react");
 
 var Autocomplete = React.createClass({
-
   getInitialState: function() {
     return { searchString: "" };
   },
@@ -14,8 +13,7 @@ var Autocomplete = React.createClass({
     this.setState({ searchString: e.target.innerHTML });
   },
 
-  render: function(){
-
+  getListItems: function() {
     var items = this.props.items,
         searchString = this.state.searchString.trim().toLowerCase();
 
@@ -27,16 +25,25 @@ var Autocomplete = React.createClass({
       items = [];
     }
 
+    var listItems = items.map(function(item){
+      return (
+        <li key={item} onClick={this.handleClick}>
+          <a href="#">{item}</a>
+        </li>
+      );
+    }.bind(this));
+
+    return listItems;
+  },
+
+  render: function(){
     return (
       <div id="autocomplete">
         <input type="text"
           onChange={this.handleChange}
           value={this.state.searchString}></input>
         <ul>
-          {items.map(function(item){
-            return <li key={item}
-              onClick={this.handleClick}><a href="#">{item}</a></li>;
-          }.bind(this))}
+          {this.getListItems()}
         </ul>
       </div>
     );
